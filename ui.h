@@ -297,12 +297,10 @@ _UI_EXTERN char *uiSaveFile(uiWindow *parent);
 _UI_EXTERN void uiMsgBox(uiWindow *parent, const char *title, const char *description);
 _UI_EXTERN void uiMsgBoxError(uiWindow *parent, const char *title, const char *description);
 
-typedef struct uiScrollView uiScrollView;
-#define uiScrollView(this) ((uiScrollView *) (this))
-_UI_EXTERN uiScrollView *uiNewScrollView();
-_UI_EXTERN void uiScrollViewSetChild(uiScrollView *v, uiControl *child);
-_UI_EXTERN int uiScrollViewMargined(uiScrollView *v);
-_UI_EXTERN void uiScrollViewSetMargined(uiScrollView *v, int margined);
+typedef struct uiScroll uiScroll;
+#define uiScroll(this) ((uiScroll *) (this))
+_UI_EXTERN uiScroll *uiNewScroll(void);
+_UI_EXTERN void uiScrollSetChild(uiScroll *scroll, uiControl *ctl);
 
 typedef struct uiArea uiArea;
 typedef struct uiAreaHandler uiAreaHandler;

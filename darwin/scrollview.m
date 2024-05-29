@@ -15,7 +15,7 @@ NSScrollView *uiprivMkScrollView(uiprivScrollViewCreateParams *p, uiprivScrollVi
 	NSBorderType border;
 	uiprivScrollViewData *d;
 
-	sv = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, 200, 200)];
+	sv = [[NSScrollView alloc] initWithFrame:NSZeroRect];
 	if (p->BackgroundColor != nil)
 		[sv setBackgroundColor:p->BackgroundColor];
 	[sv setDrawsBackground:p->DrawsBackground];
@@ -24,7 +24,7 @@ NSScrollView *uiprivMkScrollView(uiprivScrollViewCreateParams *p, uiprivScrollVi
 		border = NSBezelBorder;
 	// document view seems to set the cursor properly
 	[sv setBorderType:border];
-	[sv setAutohidesScrollers:NO];
+	[sv setAutohidesScrollers:YES];
 	[sv setHasHorizontalRuler:NO];
 	[sv setHasVerticalRuler:NO];
 	[sv setRulersVisible:NO];
@@ -62,16 +62,16 @@ void uiprivScrollViewFreeData(NSScrollView *sv, uiprivScrollViewData *d)
 	uiprivFree(d);
 }
 
-struct uiScrollView {
+struct uiScroll {
     uiDarwinControl c;
     NSScrollView *sv;
     uiprivScrollViewData *d;
     uiControl *child;
 };
 
-static void uiScrollViewDestroy(uiControl *c)
+static void uiScrollDestroy(uiControl *c)
 {
-    uiScrollView *g = uiScrollView(c);
+    uiScroll *g = uiScroll(c);
 
     if (g->child != NULL) {
         uiControlSetParent(g->child, NULL);
@@ -82,9 +82,9 @@ static void uiScrollViewDestroy(uiControl *c)
     uiFreeControl(uiControl(g));
 }
 
-uiDarwinControlAllDefaultsExceptDestroy(uiScrollView, sv)
+uiDarwinControlAllDefaultsExceptDestroy(uiScroll, sv)
 
-void uiScrollViewSetChild(uiScrollView *g, uiControl *child)
+void uiScrollSetChild(uiScroll *g, uiControl *child)
 {
     if (g->child != NULL) {
         uiControlSetParent(g->child, NULL);
@@ -104,18 +104,11 @@ void uiScrollViewSetChild(uiScrollView *g, uiControl *child)
 }
 
 
-int uiScrollViewMargined(uiScrollView *v)
+uiScroll *uiNewScroll(void)
 {
-    return 0;
-}
-void uiScrollViewSetMargined(uiScrollView *v, int margined)
-{}
+    uiScroll *g;
 
-uiScrollView *uiNewScrollView(void)
-{
-    uiScrollView *g;
-
-    uiDarwinNewControl(uiScrollView, g);
+    uiDarwinNewControl(uiScroll, g);
 
     uiprivScrollViewCreateParams params = {
         nil,

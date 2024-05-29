@@ -2,7 +2,7 @@
 
 #include "uipriv_unix.h"
 
-struct uiScrollView {
+struct uiScroll {
 	uiUnixControl c;
 	GtkWidget *widget;
 	GtkScrolledWindow *scroll;
@@ -13,11 +13,11 @@ struct uiScrollView {
 	int margined;
 };
 
-uiUnixControlAllDefaultsExceptDestroy(uiScrollView)
+uiUnixControlAllDefaultsExceptDestroy(uiScroll)
 
-void uiScrollViewDestroy(uiControl *c)
+void uiScrollDestroy(uiControl *c)
 {
-	uiScrollView *v = uiScrollView(c);
+	uiScroll *v = uiScroll(c);
 
 	if (v->child != NULL)
 		uiprivChildDestroy(v->child);
@@ -25,30 +25,18 @@ void uiScrollViewDestroy(uiControl *c)
 	uiFreeControl(c);
 }
 
-void uiScrollViewSetChild(uiScrollView *v, uiControl *child)
+void uiScrollSetChild(uiScroll *v, uiControl *child)
 {
 	if (v->child != NULL)
 		uiprivChildRemove(v->child);
 	v->child = uiprivNewChildWithBox(child, uiControl(v), v->container, v->margined);
 }
 
-int uiScrollViewMargined(uiScrollView *v)
+uiScroll *uiNewScroll(void)
 {
-	return v->margined;
-}
+	uiScroll *v;
 
-void uiScrollViewSetMargined(uiScrollView *v, int margined)
-{
-	v->margined = margined;
-	if (v->child != NULL)
-		uiprivChildSetMargined(v->child, v->margined);
-}
-
-uiScrollView *uiNewScrollView(void)
-{
-	uiScrollView *v;
-
-	uiUnixNewControl(uiScrollView, v);
+	uiUnixNewControl(uiScroll, v);
 	v->widget = gtk_scrolled_window_new(NULL, NULL);
 	v->scroll = GTK_SCROLLED_WINDOW(v->widget);
 	v->container = GTK_CONTAINER(v->widget);

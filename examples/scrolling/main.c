@@ -12,7 +12,7 @@ int main(void)
 {
 	uiInitOptions o;
 	uiWindow *w;
-	uiScrollView *s;
+	uiScroll *s;
 	uiBox *box;
 
 	memset(&o, 0, sizeof (uiInitOptions));
@@ -20,10 +20,9 @@ int main(void)
 		abort();
 
 	w = uiNewWindow("Scrolling", 320, 240, 0);
-	s = uiNewScrollView();
+	s = uiNewScroll();
 	box = uiNewVerticalBox();
-	uiScrollViewSetChild(s, uiControl(box));
-	uiScrollViewSetMargined(s, 1);
+	uiScrollSetChild(s, uiControl(box));
 	uiBoxSetPadded(box, 1);
 
 	for (int i = 0; i < 32; i++) {
