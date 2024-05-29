@@ -96,6 +96,9 @@ void uiScrollViewSetChild(uiScrollView *g, uiControl *child)
         NSView *childView = (NSView *) uiControlHandle(g->child);
         uiControlSetParent(g->child, uiControl(g));
         uiDarwinControlSetSuperview(uiDarwinControl(g->child), [g->sv contentView]);
+        [childView removeFromSuperview];
+        [childView setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [g->sv setDocumentView:childView];
         uiDarwinControlSyncEnableState(uiDarwinControl(g->child), uiControlEnabledToUser(uiControl(g)));
     }
 }
