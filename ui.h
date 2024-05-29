@@ -1465,6 +1465,15 @@ _UI_EXTERN void uiTableAppendButtonColumn(uiTable *t,
 // uiNewTable() creates a new uiTable with the specified parameters.
 _UI_EXTERN uiTable *uiNewTable(uiTableParams *params);
 
+
+typedef struct uiWebView uiWebView;
+#define uiWebView(this) ((uiWebView *) (this))
+_UI_EXTERN char *uiWebViewText(uiWebView *b);
+_UI_EXTERN void uiWebViewSetText(uiWebView *b, const char *text);
+_UI_EXTERN void uiWebViewOnClicked(uiWebView *b, void (*f)(uiWebView *b, void *data), void *data);
+_UI_EXTERN uiWebView *uiNewWebView(const char *text);
+
+
 #ifdef __cplusplus
 }
 #endif

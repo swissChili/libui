@@ -48,6 +48,7 @@ libui_sources += [
 	'darwin/text.m',
 	'darwin/undocumented.m',
 	'darwin/util.m',
+	'darwin/webview.m',
 	'darwin/window.m',
 	'darwin/winmoveresize.m',
 ]
@@ -56,7 +57,7 @@ libui_deps += [
 	meson.get_compiler('objc').find_library('objc',
 		required: true),
 	dependency('appleframeworks',
-		modules: ['Foundation', 'AppKit'],
+		modules: ['Foundation', 'AppKit', 'WebKit'],
 		required: true),
 ]
 libui_soversion = 'A'
